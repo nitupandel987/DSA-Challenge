@@ -1,0 +1,21 @@
+public class Solution {
+    public static int[] missingAndRepeating(ArrayList<Integer> arr, int n) {
+        int res[] = new int[2];
+        Set<Integer> set = new HashSet<>();
+        for(int i : arr)
+        {
+            if(set.contains(i)){
+                res[1] = i;
+            }
+            set.add(i);
+        }
+
+       for(int i = 0; i < n; i++){
+           if(!set.contains(i+1)){
+               res[0] = i+1;
+               break;
+           }
+       }
+       return res;
+    }
+}
