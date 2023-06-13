@@ -1,0 +1,74 @@
+class Solution {
+    public int reversePairs(int[] nums) {
+        int n = nums.length;
+        int start = 0, end = n-1;
+
+        return mergeSort(nums, start, end);
+        
+    }
+
+    public int mergeSort(int nums[], int start, int end){
+        int res = 0;
+        if(start < end){
+
+         int mid = start + (end-start)/2;
+         res += mergeSort(nums, start, mid);
+         res += mergeSort(nums, mid+1, end);
+         res += countPair(nums, start, mid, end);
+         merge(nums, start, mid, end);
+        }
+        return res;
+    }
+
+    public int countPair(int nums[], int start, int mid, int end){
+      int res = 0;
+      int right = mid+1;
+
+     for(int i = start; i <= mid; i++){
+        while(right <= end){
+            long mul = 2l * nums[right];
+            if(nums[i] > mul){
+                right++;
+            }
+            else
+            break;
+        }
+        res += (right-(mid+1));
+     }
+         return res;
+    }
+
+    public void merge(int nums[], int start, int mid, int end){
+        int n1 = mid - start + 1;
+        int n2 = end - mid;
+
+        int left[] = new int[n1];
+        int right[] = new int[n2];
+
+        for(int i = 0; i < n1; i++){
+            left[i] = nums[start+i];
+        }
+        for(int i = 0; i < n2; i++){
+            right[i] = nums[mid+i+1];
+        }
+
+        int i = 0, j = 0, k = start;
+
+        while(i < n1 && j < n2){
+            if(left[i] <= right[j]){
+                nums[k++] = left[i++];
+            }
+            else{
+                nums[k++] = right[j++];
+            }
+        }
+        while(i <  n1){
+            nums[k++] = left[i++];
+        }
+
+        while(j <  n2){
+            nums[k++] = right[j++];
+        }
+    }
+
+}
