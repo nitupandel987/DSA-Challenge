@@ -1,0 +1,34 @@
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        int n = nums.length;
+        if(n == 0)
+        return 0;
+        
+        Map<Integer, Integer> map = new TreeMap<>();
+        for(int i = 0 ; i < n; i++){
+            int ele = nums[i];
+            map.put(ele, map.getOrDefault(ele, 0)+1);
+        }
+       
+        int prev = (int)1e9;
+        int res = 0, count = 1;
+        for(Integer k : map.keySet()){
+        
+            if(prev == (int)1e9)
+            prev = k;
+            else  if(Math.abs(k-prev) == 1)
+           {
+               count++;
+               prev = k;
+           } 
+            else
+            {
+            res = Math.max(res, count);
+            prev = k;
+            count = 1;
+              }
+        }
+         res = Math.max(res, count);
+         return res;
+    }
+}
