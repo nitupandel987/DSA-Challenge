@@ -1,0 +1,47 @@
+class Solution
+{
+    int[] JobScheduling(Job arr[], int n)
+    {
+      Arrays.sort(arr, (a, b) -> Integer.compare(b.profit, a.profit));
+      int size = 0;
+      
+      for(Job j : arr){
+          size = Math.max(size, j.deadline);
+      }
+      
+      int res[] = new int[size+1];
+      Arrays.fill(res, -1);
+      int count = 0;
+      int profit = 0;
+      
+      for(Job j : arr){
+          
+          int indx = j.deadline;
+          if(res[indx] == -1){
+              res[indx] = j.profit;
+              
+          }
+          
+          else{
+              while(indx > 0){
+              if(res[indx] == -1){
+              res[indx] = j.profit;
+              break;
+              }
+              indx--;
+              }
+              
+          }
+      }
+      
+      for(int i = 1; i <= size; i++){
+          if(res[i] != -1){
+              count++;
+              profit += res[i];
+          }
+      }
+      
+      return new int[]{count, profit};
+    }
+}
+
