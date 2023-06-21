@@ -1,0 +1,36 @@
+class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<>();
+        int n = s.length();
+        palindrom(s, res, new ArrayList<>(), 0);
+        return res;
+    }
+
+    public void palindrom(String str, List<List<String>> res, List<String> output, int index){
+
+        if(index == str.length()){
+            res.add(new ArrayList<>(output));
+            return;
+        }
+        for(int i = index; i < str.length(); i++){
+            if(checkPalindrom(str,index,i)){
+                String sub = str.substring(index, i+1);
+                output.add(sub);
+                palindrom(str, res, output, i+1);
+                output.remove(output.size()-1);
+            }
+        }
+    }
+
+    public boolean checkPalindrom(String str, int i, int j){
+        while(i < j){
+            if(str.charAt(i) == str.charAt(j)){
+            i++;
+            j--;
+            }else{
+                return false;
+            }           
+        }
+        return true;
+    }
+}
