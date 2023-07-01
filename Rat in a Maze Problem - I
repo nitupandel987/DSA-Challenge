@@ -1,0 +1,35 @@
+class Solution {
+    public static ArrayList<String> findPath(int[][] m, int n) {
+        
+        ArrayList<String> res = new ArrayList<>();
+        if(m[0][0] == 0 || m[n-1][n-1] == 0)
+        {
+            res.add("-1");
+            return res;
+        }
+        
+        helper(res, "", 0, 0, m, new boolean[n][n]);
+        return res;
+    }
+      public static void helper(ArrayList<String> res, String str, int row, int col, int m[][], boolean visited[][]){
+           if(row == m.length-1 && col == m[0].length-1)
+            {
+                res.add(str);
+                return;
+            }
+            
+            if(row < 0 || col < 0 || row >= m.length || col >= m[0].length || m[row][col] == 0|| visited[row][col])
+            return;
+            
+            visited[row][col] = true;
+            
+            helper(res, str.concat("R"), row, col+1, m, visited);
+            helper(res,str.concat("L"), row, col-1, m, visited);
+            helper(res, str.concat("D"), row+1, col, m, visited);
+            helper(res, str.concat("U"), row-1, col, m, visited);
+            
+            visited[row][col] = false;
+            
+        
+    }
+}
