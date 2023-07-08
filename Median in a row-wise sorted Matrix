@@ -1,0 +1,40 @@
+class Solution {
+    int median(int matrix[][], int R, int C) {
+        int start = 0, end = 1000000000;
+        
+        while(start <= end){
+            int mid = (start + end) >> 1;
+            
+            int count = 0;
+            for(int i = 0; i < R; i++){
+                count += smallerOrEqualTo(matrix[i], C, mid);
+            }
+            
+            if((R*C)/ 2 >=count)
+            start = mid+1;
+            else
+            end = mid-1;
+            
+        }
+        return start;
+    }
+    
+    public int smallerOrEqualTo(int arr[], int n, int mid){
+        int start = 0, end = n-1;
+        int count = 0;
+        
+        while(start <= end){
+            int m = (start + end) >> 1;
+            
+            if(arr[m] <= mid)
+            {
+                start = m+1;
+            }
+            else{
+                end = m-1;
+            }
+        }
+        
+        return start;
+    }
+}
