@@ -1,0 +1,44 @@
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        int n = nums.length;
+        int left = 0, right = n-1;
+        int res = -1;
+        k = n-k+1;
+
+        while(true){
+         int index = partition(nums, left, right);
+          if(index == k-1)
+           {
+              res = nums[index];
+              break;
+           }
+           if(index < k-1){
+               left = index+1;
+           }
+           else{
+               right = index-1;
+           }
+        }
+
+        return res;
+    }
+
+    int partition(int arr[], int l, int r){
+        int pivot = arr[r];
+        int i = l, j = l;
+
+        for( j = l; j < r; j++){
+            if(arr[j] <= pivot){
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+                i++;
+            }
+        }
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+        
+        return i;
+    }
+}
