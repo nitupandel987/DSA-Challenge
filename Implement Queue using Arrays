@@ -1,0 +1,28 @@
+public class Solution {
+    class Queue {
+        int front, rear;
+        int []arr;
+
+        Queue() {
+            front = 0;
+            rear = 0;
+            arr = new int[100001];
+        }
+
+        public void enqueue(int e) {
+           if(rear < arr.length-1){
+               arr[rear++] = e;
+           }
+           
+        }
+        public int dequeue() {
+        if(front < rear){
+            return arr[front++];
+           
+        }
+        else{
+            return -1;
+        }
+        }
+    }
+}
