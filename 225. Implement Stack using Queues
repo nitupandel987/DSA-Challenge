@@ -1,0 +1,67 @@
+ class MyStack {
+
+     Queue<Integer> first;
+     Queue<Integer> sec;    
+    public MyStack() {
+     first = new LinkedList<>();
+     sec = new LinkedList<>();   
+    }
+    
+    public void push(int x) {
+       first.add(x); 
+    }
+    
+    public int pop() {
+        if(!first.isEmpty()){
+           int size = first.size();
+           while(size > 1){
+               size--;
+               sec.add(first.remove());
+           }
+           return first.remove();
+        }
+        else if(!sec.isEmpty()){
+            int size = sec.size();
+              while(size > 1){
+               size--;
+               first.add(sec.remove());
+           }
+           return sec.remove();
+        }
+        else
+        return -1;
+    }
+    
+    public int top() {
+       if(!first.isEmpty()){
+           int size = first.size();
+           while(size > 1){
+               size--;
+               sec.add(first.remove());
+           }
+           int ele = first.remove();
+           sec.add(ele);
+           return ele;
+        }
+        else if(!sec.isEmpty()){
+            int size = sec.size();
+              while(size > 1){
+               size--;
+               first.add(sec.remove());
+           }
+           int ele = sec.remove();
+           first.add(ele);
+           return ele;
+        }
+        else
+        return -1;
+    }
+    
+    public boolean empty() {
+      if(first.isEmpty() && sec.isEmpty())
+      return true;
+
+      return false;
+    }
+}
+
