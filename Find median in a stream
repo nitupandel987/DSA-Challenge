@@ -1,0 +1,46 @@
+class Solution
+{
+   private static PriorityQueue<Integer> secHalf;
+   private static PriorityQueue<Integer> firstHalf;
+    
+   public Solution(){
+        secHalf = new PriorityQueue<>();
+        firstHalf = new PriorityQueue<>(Collections.reverseOrder());
+    }
+    public static void insertHeap(int x)
+    {
+     
+     if(firstHalf.isEmpty() || x <= firstHalf.peek()){
+         firstHalf.add(x);
+     }
+     else{
+         secHalf.add(x);
+     }
+     balanceHeaps();
+      
+    }
+    
+  
+    public static void balanceHeaps()
+    {
+      if(firstHalf.size() - secHalf.size() > 1){
+          secHalf.add(firstHalf.poll());
+      }
+      else if(secHalf.size() > firstHalf.size()){
+          firstHalf.add(secHalf.poll());
+      }
+    }
+    
+
+    public static double getMedian()
+    {
+       if(firstHalf.size() == secHalf.size()){
+           return (firstHalf.peek() + secHalf.peek())/2.0;
+       }
+       else
+       {
+           return firstHalf.peek();
+       }
+    }
+    
+}
