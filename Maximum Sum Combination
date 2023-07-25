@@ -1,0 +1,83 @@
+class Solution {
+  
+    
+   static class pair{
+        int first, sec, dist;
+        
+        pair(int first, int sec, int dist){
+            this.first = first;
+            this.sec = sec;
+            this.dist = dist;
+        }
+    }
+       static class pair1{
+        int first, sec;
+        
+        pair1(int first, int sec){
+            this.first = first;
+            this.sec = sec;
+      
+        }
+        
+          
+     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        pair1 other = (pair1) obj;
+        return first == other.first && sec == other.sec;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(first, sec);
+    }
+    }
+    
+    static List<Integer> maxCombinations(int N, int K, int A[], int B[]) {
+      
+      Arrays.sort(A);
+      Arrays.sort(B);
+      HashSet<pair1> set = new HashSet<>();
+      
+      PriorityQueue<pair> pq = new PriorityQueue<>((a, b) -> b.dist-a.dist);
+      
+      List<Integer> res = new ArrayList<>();
+      
+      pq.add(new pair(N-1, N-1, A[N-1]+B[N-1]));
+      set.add(new pair1(N-1, N-1));
+      
+      
+      
+      while( K > 0){
+         
+          int a = pq.peek().first;
+          int b = pq.peek().sec;
+          int dist = pq.peek().dist;
+          pq.poll();
+          res.add(dist);
+
+          if(a-1 >= 0 && !set.contains(new pair1(a-1, b))){
+              int sum = A[a-1]+B[b];
+              set.add(new pair1(a-1, b));
+              pq.add(new pair(a-1, b, sum));
+          }
+          
+          if(b-1 >= 0 &&   !set.contains(new pair1(a, b-1))){
+              int sum = A[a]+B[b-1];
+              set.add(new pair1(a, b-1));
+              pq.add(new pair(a, b-1, sum));
+          }
+          K--;
+          
+      }
+      Collections.sort(res, Collections.reverseOrder());
+      
+      return res;
+      
+    }
+}
