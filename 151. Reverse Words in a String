@@ -1,0 +1,48 @@
+class Solution {
+    public String reverseWords(String s) {
+       s = s.trim();
+       int n = s.length();
+       Stack<String> stk = new Stack<>();
+       String res = "";
+
+       for(int i = 0; i < n; i++){
+           char ch = s.charAt(i);
+           if(ch >= 'a' && ch <= 'z' || 
+           ch >= 'A' && ch <= 'Z'|| 
+           ch >= '0' && ch <= '9'){
+              res += ch;
+           }
+           else
+           {  
+               if(res.length()!=0)
+               stk.push(res);
+               stk.push("$");
+               res="";
+            
+           }
+       }
+       stk.push(res);
+
+       res="";
+
+       while(!stk.isEmpty()){
+
+         if(stk.peek() == "$"){
+
+             while(!stk.isEmpty() && stk.peek() == "$"){
+                 stk.pop();
+             }
+
+           res += " ";
+
+         }else{
+
+          res += stk.pop();
+
+         }
+       }
+
+      
+        return res;
+    }
+}
