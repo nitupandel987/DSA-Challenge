@@ -1,0 +1,28 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+
+	public static void sortStack(Stack<Integer> stk) {
+		if(stk.isEmpty())
+		return;
+
+		int num = stk.pop();
+		sortStack(stk);
+		
+		helper(stk,num);
+	}
+   public static void helper(Stack<Integer> stk, int num){
+	  
+	  if(stk.isEmpty() || stk.peek() < num){
+		  stk.push(num);
+		  return;
+	  }
+
+	  int n = stk.pop();
+	  helper(stk, num);
+
+	  stk.push(n);
+	  
+		}
+   
+}
