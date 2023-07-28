@@ -1,0 +1,42 @@
+class Solution {
+    public int myAtoi(String s) {
+        s = s.trim();
+        int n = s.length();
+        if(n == 0)
+        return 0;
+        int i = 0;
+        int sign = 1;
+        if(s.charAt(0) == '-'){
+          sign = -1;
+          i++;
+        }
+        
+        if(s.charAt(0) == '+'){
+          sign = 1;
+          i++;
+        }
+
+        int MAX = Integer.MAX_VALUE;
+        int MIN = Integer.MIN_VALUE;
+
+        long res = 0;
+        while(i < n){
+
+            char ch = s.charAt(i);
+            if(ch == ' ' || !Character.isDigit(ch)){
+                break;
+            }
+            res = (res*10)+(ch-'0');
+           if(sign == -1 && res*sign <= MIN){
+               return MIN;
+           }
+
+           if(sign == 1 && res >= MAX){
+               return MAX;
+           }
+            i++;
+        }
+
+        return (int)(sign*res);
+    }
+}
