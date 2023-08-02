@@ -1,0 +1,56 @@
+class Solution {
+    class pair{
+        int f, s, d;
+        pair(int f, int s, int d){
+            this.f = f;
+            this.s = s;
+            this.d = d;
+        }
+    }
+    public int orangesRotting(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        PriorityQueue<pair> pq = new PriorityQueue<>((a, b) -> a.d-b.d);
+        boolean visited[][] = new boolean[n][m];
+        int freshCount = 0;
+
+        for(int i = 0 ; i < n; i++){
+            for(int j = 0; j < m; j++){
+                if(grid[i][j] == 2){
+                    visited[i][j] = true;
+                    pq.add(new pair(i, j, 0));
+                }else if(grid[i][j] == 1){
+                    freshCount++;
+                }
+            }
+        }
+       
+       int delrow[] = {-1, 0, 1, 0};
+       int delcol[] = {0, 1, 0, -1};
+
+       int res = 0;
+        while(!pq.isEmpty()){
+            int r = pq.peek().f;
+            int c = pq.peek().s;
+            int dis = pq.peek().d;
+            pq.remove();
+            res = Math.max(res, dis);
+
+            for(int i = 0; i < 4; i++){
+                int nr = r+delrow[i];
+                int nc = c+delcol[i];
+
+                if(nr >= 0 && nr < n & nc >= 0 && nc < m && 
+                !visited[nr][nc] && grid[nr][nc] == 1){
+                    visited[nr][nc] = true;
+                    pq.add(new pair(nr, nc, dis+1));
+                    freshCount--;
+                }
+            }
+
+        }
+        if(freshCount > 0)
+        return -1;
+        return res;
+    }
+}
