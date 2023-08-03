@@ -1,0 +1,49 @@
+class Solution {
+    public int strStr(String haystack, String needle) {
+        int n = haystack.length();
+        int m = needle.length();
+        int lps[] = new int[m];
+        fillLps(needle, lps);
+
+        int i= 0, j = 0;
+        while(i < n){
+            if(haystack.charAt(i) == needle.charAt(j)){
+                i++;
+                j++;
+            }
+            if(j == m){
+                return i-j;
+            }
+            else if(i < n && haystack.charAt(i)!=needle.charAt(j)){
+              if(j == 0)
+              i++;
+              else
+              j = lps[j-1];
+            }
+        }
+        return -1;
+
+    }
+
+    private void fillLps(String str, int lps[]){
+        int n = str.length();
+        int len = 0, i = 1;
+        lps[0] = 0;
+
+        while(i < n){
+            if(str.charAt(i) == str.charAt(len)){
+                len++;
+                lps[i] = len;
+                i++;
+            }
+            else{
+                if(len == 0){
+                 lps[i] = 0;
+                 i++;
+                }else{
+                 len = lps[len-1];
+                }
+            }
+        }
+    }
+}
