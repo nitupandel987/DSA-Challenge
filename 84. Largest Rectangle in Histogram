@@ -1,0 +1,60 @@
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        Stack<Integer> stk = new Stack<>();
+        
+        int left[] = new int[n];
+        NSL(stk, left, heights);
+        
+        stk = new Stack<>();
+        int right[] = new int[n];
+        NSR(stk, right, heights);
+
+        int res = 0;
+
+        for(int i = 0 ; i < n; i++){
+            int width = (right[i] - left[i] -1);
+            width *= heights[i];
+            res = Math.max(width , res);
+        }
+        return res;
+    }
+     private void NSL(Stack<Integer> stk, int left[], int heights[]){
+          int n = heights.length;
+         for(int i = 0; i < n; i++){
+            if(stk.isEmpty()){
+                left[i] = -1;
+            }else{
+                while(!stk.isEmpty() && heights[stk.peek()] >= heights[i]){
+                    stk.pop();
+                }
+                if(stk.isEmpty()){
+                    left[i] = -1;
+                }
+                else{
+                    left[i] = stk.peek();
+                }
+            }
+            stk.push(i);
+        }
+     }
+    private void NSR(Stack<Integer> stk, int right[], int heights[]){
+         int n = heights.length;
+         for(int i = n-1; i >= 0; i--){
+            if(stk.isEmpty()){
+                right[i] = n;
+            }else{
+                while(!stk.isEmpty() && heights[stk.peek()] >= heights[i]){
+                    stk.pop();
+                }
+                if(stk.isEmpty()){
+                    right[i] = n;
+                }
+                else{
+                    right[i] = stk.peek();
+                }
+            }
+            stk.push(i);
+        }
+    }
+}
