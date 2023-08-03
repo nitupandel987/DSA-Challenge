@@ -1,0 +1,31 @@
+class Solution
+{ 
+    int celebrity(int M[][], int n)
+    {
+    	Stack<Integer> stk = new Stack<>();
+    	for(int i = 0; i < n; i++){
+    	    stk.push(i);
+    	}
+    	
+    	while(stk.size() > 1){
+    	    int a = stk.pop();
+    	    int b = stk.pop();
+    	    
+    	    if(M[a][b] == 1){
+    	        stk.push(b);
+    	    }else{
+    	        stk.push(a);
+    	    }
+    	}
+    	int pos = stk.pop();
+    	
+    	for(int i = 0; i < n; i++){
+    	    if(pos != i){
+    	        if(M[i][pos] != 1 || M[pos][i] != 0)
+    	        return -1;
+    	    }
+    	}
+    	
+    	return pos;
+    }
+}
