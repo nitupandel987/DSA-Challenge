@@ -1,0 +1,19 @@
+class Solution {
+    public static int minChar(String str) {
+      int n = str.length();
+      int i = 0, j = n-1, b = n-1;
+      
+      while(i < j){
+          if(i < j && str.charAt(i) == str.charAt(j)){
+              i++;
+              j--;
+          }
+          else{
+              b--;
+              j = b;
+              i = 0;
+          }
+      }
+      return n-b-1;
+    }
+}
