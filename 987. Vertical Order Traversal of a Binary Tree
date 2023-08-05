@@ -1,0 +1,57 @@
+class Solution {
+      class pair{
+            TreeNode node;
+            int hd;
+            int lvl;
+
+            pair(TreeNode node, int hd, int lvl){
+                this.node = node;
+                this.hd = hd;
+                this.lvl = lvl;
+            }
+        }
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+      List<List<Integer>> res = new ArrayList<>();
+      Queue<pair> pq = new LinkedList<>();
+      pq.add(new pair(root, 0, 0));
+
+      TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map = new TreeMap<>();
+
+
+      while(!pq.isEmpty()){
+          pair p = pq.poll();
+          TreeNode cur = p.node;
+          int x = p.hd;
+          int y = p.lvl;
+
+          if(!map.containsKey(x)){
+              map.put(x, new TreeMap<>());
+          }
+          if(!map.get(x).containsKey(y)){
+             map.get(x).put(y, new PriorityQueue<>());
+          }
+
+          map.get(x).get(y).offer(cur.val);
+
+          if(cur.left != null){
+              pq.add(new pair(cur.left, x-1, y+1));
+          }
+          if(cur.right != null){
+              pq.add(new pair(cur.right, x+1, y+1));
+          }
+      }
+      for(TreeMap<Integer, PriorityQueue<Integer>> m : map.values()){
+          res.add(new ArrayList<>());
+          for(PriorityQueue<Integer> nd : m.values())
+          {
+              while(!nd.isEmpty()){
+                res.get(res.size()-1).add(nd.poll());
+              }
+          }
+
+        
+      }
+  return res;
+
+    }
+}
