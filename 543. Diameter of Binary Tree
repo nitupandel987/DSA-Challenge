@@ -1,0 +1,22 @@
+class Solution {
+    public int diameterOfBinaryTree(TreeNode root) {
+        if(root == null)
+        return 0;
+        
+        int dia[] = {0};
+        height(root, dia);
+
+        return dia[0];
+    }
+    public int height(TreeNode root, int dia[]){
+        if(root == null)
+        return 0;
+
+        int lh = height(root.left, dia);
+        int rh = height(root.right, dia);
+
+        dia[0] = Math.max(dia[0], lh+rh);
+
+        return Math.max(lh, rh)+1;
+    }
+}
