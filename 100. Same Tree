@@ -1,0 +1,24 @@
+class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        ArrayList<Integer> first = new ArrayList<>();
+        ArrayList<Integer> sec = new ArrayList<>();
+
+        inorder(first, p);
+        inorder(sec, q);
+
+        return first.equals(sec);
+    }
+
+
+    public void inorder(ArrayList<Integer> arr, TreeNode root){
+       if(root == null)
+       {
+           arr.add(-1);
+           return;
+       }
+       inorder(arr, root.left);
+       arr.add(root.val);
+       inorder(arr, root.right);
+       
+    }
+}
