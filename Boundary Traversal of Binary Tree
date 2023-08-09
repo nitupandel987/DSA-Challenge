@@ -1,0 +1,81 @@
+class Solution
+{
+	ArrayList <Integer> boundary(Node node)
+	{
+	    ArrayList <Integer> left = new ArrayList<>();
+	    if(node == null)
+	    return left;
+	    
+	    if(node.left == null && node.right == null){
+	        left.add(node.data);
+	        return left;
+	    }
+	  
+	  left.add(node.data);
+	  
+	  leftSide(left, node.left);
+	  
+	  leafSide(left, node.left);
+	  
+	  leafSide(left, node.right);
+	  
+	  ArrayList <Integer> right = new ArrayList <Integer>();
+	  rightSide(right, node.right);
+	  
+	  Collections.reverse(right);
+	  left.addAll(right);
+	  
+	  return left;
+	}
+	
+	public void leftSide(ArrayList <Integer> left, Node node){
+	    
+	    if( node == null || (node.left == null && node.right == null))
+	    return;
+	    
+	    left.add(node.data);
+	    
+	    if(node.left != null){
+	        leftSide(left, node.left);
+	    }
+	    else{
+	        leftSide(left, node.right);
+	    }
+	    
+	}
+	
+	public void leafSide(ArrayList <Integer> left, Node node){
+	    if(node == null)
+	    {
+	        return;
+	    }
+	    if((node.left == null && node.right == null))
+	    {
+	        left.add(node.data);
+	        return;
+	    }     
+	    
+	    
+	        leafSide(left, node.left);
+	        leafSide(left, node.right);
+	    
+	}
+	
+	public void rightSide(ArrayList <Integer> right, Node node){
+	   
+	    if(node == null || (node.left == null && node.right == null))
+	    {
+	        return;
+	    }   
+	    
+	    right.add(node.data);
+	    
+	    if(node.right != null){
+	        rightSide(right, node.right);
+	    }
+	    else{
+	        rightSide(right, node.left);
+	    }
+	    
+	}
+}
