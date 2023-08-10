@@ -1,0 +1,19 @@
+class Solution {
+    public TreeNode sortedArrayToBST(int[] nums) {
+        int s = 0;
+        int e = nums.length-1;
+        return helper(s, e, nums);
+    }
+
+    public TreeNode helper(int s, int e, int nums[]){
+        if( s > e){
+            return null;
+        }
+        int mid = s + (e-s)/2;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = helper(s, mid-1, nums);
+        root.right = helper(mid+1, e, nums);
+
+        return root;
+    }
+}
