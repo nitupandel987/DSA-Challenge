@@ -1,0 +1,21 @@
+class Solution {
+    
+    public ArrayList<Integer> dfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
+    
+      ArrayList<Integer> res = new ArrayList<Integer>();
+      boolean visited[] = new boolean[V];
+      helper(res, adj, 0, visited);
+      return res;
+    
+    }
+    
+    public void helper(ArrayList<Integer> res, ArrayList<ArrayList<Integer>> adj, int root, boolean visited[]){
+        res.add(root);
+        visited[root] = true;
+        
+        for(int it : adj.get(root)){
+            if(!visited[it])
+            helper(res, adj, it, visited);
+        }
+    }
+}
