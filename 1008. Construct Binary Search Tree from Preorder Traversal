@@ -1,0 +1,19 @@
+
+class Solution {
+    public TreeNode bstFromPreorder(int[] preorder) {
+
+     int indx[]={0};
+     return helper(preorder, indx, Integer.MAX_VALUE);
+
+    }
+    public TreeNode helper(int preorder[], int indx[], int prev){
+        if(indx[0] >= preorder.length || preorder[indx[0]] > prev)
+        return null;
+
+        TreeNode root = new TreeNode(preorder[indx[0]++]);
+        root.left = helper(preorder, indx, root.val);
+        root.right = helper(preorder, indx, prev);
+
+        return root;
+    }
+}
