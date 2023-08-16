@@ -1,0 +1,32 @@
+public static void findPreSuc(Node root, int key)
+{
+   
+ int arr[] = {Integer.MIN_VALUE, Integer.MAX_VALUE};
+ helper(root, arr, key);
+ 
+ if(arr[0] == Integer.MIN_VALUE){
+     arr[0] = -1;
+ }
+ if(arr[1] == Integer.MAX_VALUE){
+     arr[1] = -1;
+ }
+ pre = new Node(arr[0]);
+ suc = new Node(arr[1]);
+ //System.out.print(arr[0]+" "+arr[1]);
+ 
+}
+public static void helper(Node root, int arr[], int key){
+    if(root == null){
+        return;
+    }
+    helper(root.left, arr, key);
+    if(root.data < key){
+        arr[0] = Math.max(arr[0], root.data);
+    }
+    if(root.data > key){
+        arr[1] = Math.min(arr[1], root.data);
+    }
+    helper(root.right, arr, key);
+}
+
+}
