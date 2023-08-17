@@ -1,0 +1,26 @@
+class Tree {
+
+    int findCeil(Node root, int key) {
+      int ceil[] = {Integer.MAX_VALUE};
+      
+      helper(root, key, ceil);
+      
+      if(ceil[0] == Integer.MAX_VALUE)
+      return -1;
+      
+      return ceil[0];
+      
+    }
+    public void helper(Node root, int key, int ceil[]){
+        if(root == null){
+            return;
+        }
+        
+        helper(root.left, key, ceil);
+        if(root.data >= key){
+            ceil[0] = Math.min(ceil[0], root.data);
+        }
+        helper(root.right, key, ceil);
+    }
+    
+}
