@@ -1,0 +1,22 @@
+
+class Solution {
+    public int maxPathSum(TreeNode root) {
+        
+        int maxi[] = {Integer.MIN_VALUE};
+        helper(root, maxi);
+        return maxi[0];
+
+    }
+    public int helper(TreeNode root, int maxi[]){
+        if(root == null)
+        return 0;
+
+        int leftSum = Math.max(0, helper(root.left, maxi));
+        int rightSum = Math.max(0, helper(root.right, maxi));
+
+        maxi[0] = Math.max(maxi[0], root.val+leftSum+rightSum);
+
+        return root.val + Math.max(leftSum, rightSum);
+        
+       }
+}
