@@ -1,0 +1,25 @@
+
+class BSTIterator {
+
+    Stack<Integer> stk;
+    public BSTIterator(TreeNode root) {
+        stk = new Stack<>();
+         helper(root, stk);
+    }
+
+    public void helper(TreeNode root, Stack<Integer> stk){
+       if(root==null)
+        return;
+        helper(root.right, stk);
+        stk.push(root.val);
+        helper(root.left, stk);
+    }
+    
+    public int next() {
+        return stk.pop();
+    }
+    
+    public boolean hasNext() {
+    return !stk.isEmpty();
+    }
+}
