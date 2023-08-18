@@ -1,0 +1,24 @@
+class Solution
+{
+ 
+    int count = 0;
+    int ans = 0;
+    public int kthLargest(Node root,int K)
+    {
+     helper(root, K);
+     return ans;
+    }
+    
+    public void helper(Node root, int k){
+        if(root == null){
+            return;
+        }
+        helper(root.right, k);
+        count++;
+        if(count == k){
+            ans = root.data;
+        }
+        
+        helper(root.left, k);
+    }
+}
