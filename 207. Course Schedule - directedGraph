@@ -1,0 +1,45 @@
+class Solution {
+    public boolean canFinish(int n, int[][] prerequisites) {
+         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+   
+        for(int i = 0 ; i < n; i++){
+            list.add(new ArrayList<>());
+        }
+
+        for(int i = 0 ; i < prerequisites.length; i++){
+            int a = prerequisites[i][0];
+            int b = prerequisites[i][1];
+            list.get(b).add(a);
+         
+        }
+        int indeg[] = new int[n];
+        for(int i = 0 ; i < n; i ++){
+            for(int it : list.get(i)){
+                indeg[it]++;
+            }
+        }
+        List<Integer> res = new ArrayList<>();
+        Queue<Integer> pq = new LinkedList<>();
+        for(int i = 0 ; i < n; i++){
+            if(indeg[i] == 0){
+                pq.add(i);
+            }
+        }
+
+        while(!pq.isEmpty()){
+            int ele = pq.poll();
+            res.add(ele);
+
+            for(int it : list.get(ele)){
+                if(indeg[it] > 0){
+                    indeg[it] --;
+                    if(indeg[it] == 0){
+                        pq.add(it);
+                    }
+                }
+            }
+        }
+        
+        return res.size()==n;
+    }
+}
