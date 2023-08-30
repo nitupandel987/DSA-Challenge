@@ -1,0 +1,39 @@
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        int n = graph.length;
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        int color[] = new int[n];
+        Arrays.fill(color, -1);
+
+        for(int i = 0 ; i < graph.length; i ++){
+            ArrayList<Integer> temp = new ArrayList<>();
+            for(int j = 0 ; j < graph[i].length; j++){
+                temp.add(graph[i][j]);
+            }
+            adj.add(temp);
+        }
+        for(int i = 0 ; i < n; i ++)
+        {
+            if(color[i] == -1){
+               if(!DFS(adj, color, i, 0))
+               return false;
+            }
+        }
+       // System.out.println(adj);
+        return true;
+        
+    }
+    public boolean DFS(ArrayList<ArrayList<Integer>> adj, int color[], int node, int c){
+       color[node] = c;
+
+       for(int it : adj.get(node)){
+           if(color[it] == -1){
+             if(!DFS(adj, color, it, 1-c))
+             return false;        
+           }else if(color[it] == c){
+            return false;
+           }
+       }
+       return true;
+    }
+}
