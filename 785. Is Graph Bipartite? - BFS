@@ -1,0 +1,45 @@
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        int n = graph.length;
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        int color[] = new int[n];
+        Arrays.fill(color, -1);
+
+        for(int i = 0 ; i < graph.length; i ++){
+            ArrayList<Integer> temp = new ArrayList<>();
+            for(int j = 0 ; j < graph[i].length; j++){
+                temp.add(graph[i][j]);
+            }
+            adj.add(temp);
+        }
+        for(int i = 0 ; i < n; i ++)
+        {
+            if(color[i] == -1){
+               if(!BFS(adj, color, i))
+               return false;
+            }
+        }
+       // System.out.println(adj);
+        return true;
+        
+    }
+    public boolean BFS(ArrayList<ArrayList<Integer>> adj, int color[], int node){
+        Queue<Integer> pq = new LinkedList<>();
+        color[node] = 0;
+        pq.add(node);
+
+        while(!pq.isEmpty()){
+            int ele = pq.poll();
+
+            for(int it : adj.get(ele)){
+                if(color[it] == -1){
+                  color[it] = 1-color[ele];
+                  pq.add(it);
+                }else if(color[it] == color[ele]){
+                  return false;
+                }
+            }
+        }
+        return true;
+    }
+}
