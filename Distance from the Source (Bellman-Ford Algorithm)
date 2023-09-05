@@ -1,0 +1,30 @@
+class Solution {
+    static int[] bellman_ford(int V, ArrayList<ArrayList<Integer>> edges, int S) {
+       int res[] = new int[V];
+       Arrays.fill(res, (int)(1e8));
+       res[S] = 0; 
+       
+       for(int i = 0 ; i < V; i++){
+           for(ArrayList<Integer> edge : edges){
+               int u = edge.get(0);
+               int v = edge.get(1);
+               int wt = edge.get(2);
+               
+               if(res[u] != 1e9 && res[u]+wt < res[v]){
+                   res[v] = res[u]+wt;
+               }
+           }
+       }
+       
+      for(ArrayList<Integer> edge : edges){
+           int u = edge.get(0);
+               int v = edge.get(1);
+               int wt = edge.get(2);
+               
+               if(res[u] != 1e9 && res[u]+wt < res[v]){
+                  return new int[]{-1};
+               }
+      }
+      return res;
+    }
+}
